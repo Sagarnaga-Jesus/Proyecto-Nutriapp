@@ -11,7 +11,7 @@ def index():
         buscar = request.form['buscar']
         flash(f'Buscando: {buscar}', 'info')
         
-    return render_template('buscador.html')
+    return render_template('base.html')
 
 @app.route('/targeta', methods=['GET', 'POST'])
 def targeta():
