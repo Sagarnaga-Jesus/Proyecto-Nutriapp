@@ -1,7 +1,11 @@
-
+{% extends "base.html" %}
+{% block contenido %}
+{% for comida in comidas %}
     <div class="card" style="width: 18rem;">
-        <img src="" class="card-img-top" alt="...">
+        <img src="{{comida.imagen}}" class="card-img-top" alt="{{comida.name}}">
         <div class="card-body">
-            <h5 class="card-title">Card title</h5>
+            <h5 class="card-title">{{comida.name}}</h5>
         </div>
     </div>
+{% endfor %}
+{% endblock %}

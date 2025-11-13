@@ -29,11 +29,29 @@
     <!-- Boton buscar luisito europeo -->
     <div class="row" style="padding: 20px; color: white; margin-top: 20px;">
         <h1 class="text-center text-black">Buscador de Recetas</h1>
-        <form class="d-flex" role="search" method="POST" action="/targeta">
-            <input class="form-control me-2" type="search" placeholder="Search" name="" value="" id="buscar"
+        <form class="d-flex" role="search" method="POST" action="/buscar">
+            <input class="form-control me-2" type="search" placeholder="Search" name="name" value="name" id="buscar"
                 aria-label="Search" />
             <button class="btn btn-outline-success,color:#a8ff78" type="submit">Buscar</button>
         </form>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="container mt-4">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show"
+                        role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <div class="container">
+        {% block content %}{% endblock %}
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
