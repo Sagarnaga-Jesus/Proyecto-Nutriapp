@@ -5,6 +5,7 @@ import requests
 app = Flask(__name__)
 app.secret_key = '1q2w3e4r5t6y7u8i9o0pp0o9i8u7y6t5r4e3w2q1'
 API='https://www.themealdb.com/api/json/v1/1/search.php?s='
+api_detalles='https://www.themealdb.com/api/json/v1/1/lookup.php?i='
 app.permanent_session_lifetime = timedelta(minutes=30)
 
 @app.route('/' , methods=['GET', 'POST'])
@@ -20,24 +21,38 @@ def buscar():
         flash('Por favor ingresa un nombre de comida válido.', 'error')
         return redirect(url_for('base'))
     
+    API = "https://www.themealdb.com/api/json/v1/1/search.php?s="
+
     try:
-        response = requests.get(f"{API}{comida }")
+        response = requests.get(f"{API}{comida}")
         if response.status_code == 200:
             comida_data = response.json()
+            if comida_data['meals']:
+                platillo = comida_data['meals'][0]
 
-            comida_info = {
-                'name': comida_data['strMeal'].title(),
-                'categoria': comida_data['strCategory'],
-                'height': comida_data['strArea'],
-                'instrucciones': comida_data['strInstructions'],
-                'imagen': comida_data['strMealThumb'],
-            }
-            
-            return render_template('targeta.html', comidas=comida_info)
+                comida_info = {
+                    'name': platillo['strMeal'].title(),
+                    'categoria': platillo['strCategory'],
+                    'area': platillo['strArea'],
+                    'instrucciones': platillo['strInstructions'],
+                    'imagen': platillo['strMealThumb'],
+                }
+
+                ingredientes = []
+                for i in range(1, 21):
+                    ingrediente = platillo.get(f'strIngredient{i}')
+                    medida = platillo.get(f'strMeasure{i}')
+                    if ingrediente and ingrediente.strip():
+                        ingredientes.append(f"{ingrediente} - {medida}")
+
+                return render_template('targeta.html', comidas=comida_info, ingredientes=ingredientes)
+            else:
+                flash(f'Comida "{comida}" no encontrada.', 'error')
+                return redirect(url_for('index'))
         else:
-            flash(f'Comida "{comida}" no encontrada.', 'error')
+            flash('Error al obtener datos de la API.', 'error')
             return redirect(url_for('index'))
-        
+
     except requests.exceptions.RequestException:
         flash('Error al conectar con la API de comida. Inténtalo de nuevo más tarde.', 'error')
         return redirect(url_for('index'))

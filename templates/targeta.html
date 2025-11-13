@@ -1,11 +1,24 @@
 {% extends "base.html" %}
 {% block contenido %}
-{% for comida in comidas %}
-    <div class="card" style="width: 18rem;">
-        <img src="{{comida.imagen}}" class="card-img-top" alt="{{comida.name}}">
-        <div class="card-body">
-            <h5 class="card-title">{{comida.name}}</h5>
-        </div>
+<div class="container">
+    <div class="row">
+        {% for comida in comidas %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100" style="cursor: pointer;" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">
+                    <img src="{{ comida.imagen }}" class="card-img-top" alt="{{ comida.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ comida.name }}</h5>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
     </div>
-{% endfor %}
+    <div style="min-height: 120px;">
+        <div class="collapse collapse-horizontal" id="collapseWidthExample">
+            <div class="card card-body" style="width: 300px;">
+                This is some placeholder content for a horizontal collapse. It’s hidden by default and shown when triggered.
+            </div>
+        </div>
+</div>
+</div>
 {% endblock %}
