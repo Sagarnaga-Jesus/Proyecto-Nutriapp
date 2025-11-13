@@ -1,21 +1,32 @@
 {% extends "base.html" %}
 {% block contenido %}
 {% block title %} Para comida en comidas {%endblock%}
+
 <div class="card mb-3" style="max-width: 540px;">
-        <div class="row g-0">
+    <div class="row g-0">
+
         <div class="col-md-4">
-            <img src="{{ comida.imagen }}" class="img-fluid rounded-start" alt="{{ comida.name }}">
+            <img src="{{ comidas.imagen }}" class="img-fluid rounded-start" alt="{{ comidas.name }}">
         </div>
+
         <div class="col-md-8">
             <div class="card-body">
-            <h5 class="card-title">{{ comida.name }}</h5>
-            <p class="card-text">{{ comida.instrucciones }}</p>
-            <p class="card-text"><small class="text-body-secondary">{{ comida.categoria }} - {{ comida.area }}</small></p>
-            <p class="card-text"><small class="text-body-secondary">{{ comida.ingredientes }}</small></p>
-            
+                <h5 class="card-title">{{ comidas.name }}</h5>
+                <p class="card-text">{{ comidas.instrucciones }}</p>
+                <p class="card-text">
+                    <small class="text-body-secondary">{{ comidas.categoria }} - {{ comidas.area }}</small>
+                </p>
+
+                <h6>Ingredientes:</h6>
+                <ul>
+                    {% for ing in ingredientes %}
+                        <li>{{ ing }}</li>
+                    {% endfor %}
+                </ul>
             </div>
         </div>
-        </div>
+
     </div>
-{% endfor %}
+</div>
+
 {% endblock %}
