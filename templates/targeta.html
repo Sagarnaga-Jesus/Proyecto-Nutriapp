@@ -5,7 +5,6 @@
     <div class="row">
 
         {% for comida in comidas %}
-        <!-- Tarjeta -->
         <div class="card col-4 mx-1 mb-4 border border-5 border-dark"
             data-bs-toggle="modal"
             data-bs-target="#modal-{{ loop.index }}"
@@ -24,21 +23,18 @@
             </div>
         </div>
 
-        <!-- Modal PARA ESTA COMIDA -->
         <div class="modal fade" id="modal-{{ loop.index }}" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
 
-                    <!-- Header -->
                     <div class="modal-header">
                         <h1 class="modal-title fs-4">{{ comida.name }}</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
 
-                    <!-- Body -->
                     <div class="modal-body">
 
-                        <img src="{{ comida.imagen }}" class="img-fluid mb-3 rounded">
+                        <img src="{{ comida.imagen }}" class="img-fluid mb-3 rounded" style="max-width: 250px; max-height: 250px;">
 
                         <p><strong>Categoría:</strong> {{ comida.categoria }}</p>
                         <p><strong>Área:</strong> {{ comida.area }}</p>
@@ -55,7 +51,6 @@
 
                     </div>
 
-                    <!-- Footer -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                     </div>
